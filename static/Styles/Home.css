@@ -1,0 +1,12 @@
+.Ttl {
+  white-space: nowrap;
+  width: 0;
+  animation: typeWrt 1.5s steps(5, start) infinite; }
+
+@keyframes typeWrt {
+  0% {
+    width: 0; }
+  100% {
+    width: 100%; } }
+
+/*# sourceMappingURL=Home.css.map */

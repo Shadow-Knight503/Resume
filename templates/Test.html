@@ -1,0 +1,102 @@
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% sass_src 'Styles/Test.scss' %}" rel="stylesheet" type="text/css"/>
+    <script>
+        tailwind.config = {
+            container: {
+                center: true,
+            },
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    },
+                    fontFamily: {
+                        'Comf': ['Comfortaa', 'sans-serif'],
+                        'Oswd': ['Oswald', 'sans-serif'],
+                    },
+                    keyframes: {
+                        'wiggle': {
+                            '0%': {transform: 'rotate(-3deg) scale(1.5)'},
+                            '50%': {transform: 'rotate(3deg)'},
+                            '100%': {transform: 'rotate(-3deg) scale(1)'}
+                        },
+                        'title': {
+                            '0%': {transform: 'translateY(5ch)'},
+                            '60%': {transform: 'translateY(-0.5ch)'},
+                            '100%': {transform: 'translateY(0)'},
+                        },
+                        'op_wd': {
+                            '0%': {transform: 'scaleY(0)'},
+                            '100%': {transform: 'scaleY(1)'}
+                        }
+                    },
+                    animation: {
+                        'title': 'title 2s ease-out forwards',
+                        'wiggle': 'wiggle 1s ease-in-out forwards',
+                        'opwd': 'op_wd 1s ease-in forwards'
+                    },
+                    transitionProperty: {
+                        ht: 'height 2s'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .hey {
+                display: inline-block;
+                position: relative;
+                color: #0087ca;
+            }
+        }
+    </style>
+    <title>Test Stuff</title>
+</head>
+<body class="bg-slate-900 container grid">
+<style>
+    .badge-title {
+        font-weight: bold;
+        font-family: "AvenirNext-Medium", serif;
+        text-align: center;
+        text-indent: 50%;
+        text-anchor: middle;
+    }
+</style>
+<p class="text-5xl text-slate-200 text-center font-Comf mt-5">Test Space</p>
+<div class="flex gap-5 bg-slate-800 justify-self-center w-[80%] h-[70vh] mt-5 justify-center
+        border-double border-slate-500 border-4 p-5">
+    {#            Widget codes #}
+    {#        <div class="transition-ht duration-300 hover:h-[200px] h-[50px] w-[200px] bg-red-500">#}
+    {#        </div>#}
+    {#        <div class="p-3 transition-ht duration-500 h-fit w-[200px] bg-red-500">#}
+    {#            <div class="bg-blue-900 w-full h-7 mb-1"#}
+    {#                 onclick="this.nextElementSibling.classList.toggle('h-[100px]');#}
+    {#                 this.nextElementSibling.children[0].classList.toggle('animate-wiggle');"></div>#}
+    {#            <div class="items-center container justify-items-center bg-blue-500 w-full h-0 transition-ht overflow-hidden">#}
+    {#                <img class="max-w-[3rem] max-h-[3rem] rounded delay-100" style="animation-delay: 0.25s;"#}
+    {#                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"#}
+    {#                 alt="POP">#}
+    {#            </div>#}
+    {#        </div>#}
+
+    {#            Particle animation #}
+    <div class="flex justify-center self-center relative z-15">
+        {% for n in Lst %}
+            <div class="Part absolute self-center z-1 rounded-full h-5 w-5 bg-blue-500"></div>
+        {% endfor %}
+        <div class="absolute self-center z-15 rounded-full bg-red-500 h-40 w-40"></div>
+    </div>
+</div>
+</body>
+</html>

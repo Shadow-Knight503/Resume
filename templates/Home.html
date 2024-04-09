@@ -1,0 +1,204 @@
+{% load sass_tags %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{% sass_src 'Styles/Home.scss' %}" rel="stylesheet" type="text/css"/>
+
+    <script>
+        tailwind.config = {
+            container: {
+                center: true,
+            },
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    },
+                    fontFamily: {
+                        'Comf': ['Comfortaa', 'sans-serif'],
+                        'Oswd': ['Oswald', 'sans-serif'],
+                    },
+                    keyframes: {
+                        'wiggle': {
+                            '0%, 100%': {transform: 'rotate(-3deg)'},
+                            '50%': {transform: 'rotate(3deg)'},
+                        },
+                        'title': {
+                            '0%': {transform: 'translateY(5ch)'},
+                            '60%': {transform: 'translateY(-0.5ch)'},
+                            '100%': {transform: 'translateY(0)'},
+                        },
+                        'wid_op': {
+                            '0%': {transform: 'rotate(540deg)'},
+                            '50%': {transform: 'rotate(-20deg)'},
+                        },
+                        'tywrt': {
+                            '0%': {opacity: 0},
+                            '100%': {opacity: 1},
+                        }
+                    },
+                    animation: {
+                        'title': 'title 2s ease-out forwards',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'opwd': 'wid_op 1s ease-in forwards',
+                        'typwrt': 'tywrt 1.5s ease-in forwards',
+                    },
+                    transitionProperty: {
+                        ht: 'height 2s'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .hey {
+                display: inline-block;
+                position: relative;
+                color: #0087ca;
+            }
+        }
+    </style>
+    <title>Leroy's Resume</title>
+</head>
+<body class="relative bg-slate-900 grid" onload="Load();">
+{% include "Nav.html" %}
+<div class="fixed w-full h-full bg-slate-950 z-[69]" id="loadScr" hidden>Loading...</div>
+<div class="bg-gray-700 justify-self-end rounded-3xl fixed z-50 w-[5rem] mr-[1ch] mt-[10vh] rounded-t-full
+    rounded-b-full border-x-4 border-grey-500 transition-ht duration-200 ease-in-out h-min">
+    <img class="ease-in invert rounded-[50%]" alt="Links"
+         onclick="this.nextElementSibling.classList.toggle('h-[9rem]');this.classList.toggle('animate-opwd')"
+         src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-cartoon-link-icon-download-image_1196815.jpg">
+    <div class="items-center container justify-items-center grid h-0 transition-ht duration-200 overflow-hidden">
+        <div class="py-2 mb-3 transition-ht duration-200">
+            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle"
+                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"
+                 alt="POP">
+            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle border-1"
+                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"
+                 alt="POP">
+        </div>
+    </div>
+</div>
+<div class="bg-gradient-to-r w-full h-[20vh] from-blue-950 from-25% via-blue-500 via-60% to-indigo-500 to-95%
+        flex justify-center items-center" onload="Load()">
+    <p class="text-3xl font-Oswd absolute break-words w-[20rem] text-[#243c5a] self-center text-center">Hello World</p>
+</div>
+<div class="container justify-self-center">
+    <div class="bg-gray-700 text-white font-Comf mt-4 p-[2ch] rounded grid">
+        {% for El in Els %}
+            <div class="w-fit">
+                <div class="font-Oswd text-3xl text-blue-200 justify-center place-self-center mb-2 overflow-hidden">
+                    <ul class="flex">
+                        {% for el in El %}
+                            <li class="animate-typwrt"
+                                style="animation-delay: {{ forloop.counter|mult:"100" }}ms"
+                            >{{ el }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% if El == "Skills" %}
+                <div class="flex flex-wrap gap-2 px-[2vw] py-[2vh] bg-gray-700 place-content-center">
+                    {% for Lang in Langs %}
+                        <div class="relative group hover:-translate-y-2 hover:z-20 transition-all ease-out bg-contain
+                            bg-no-repeat bg-center
+                            min-w-[4rem] min-h-[4rem]"
+                             style="background-image: url('{{ Lang.Icon.url }}');"
+                             onclick='togFoc({{ Lang.id }})'>
+                            <div id="Lang_{{ Lang.id }}" style="z-index: 50"
+                                 class="focus:w-auto focus:z-[30] w-fit focus:text-sm
+                                 focus:after:block focus:bg-slate-950 bg-transparent duration-200 ease-out
+                                 absolute left-[1em] focus:-top-9 -top-4 after:content-[' '] after:hidden transition-all
+                                 after:border-r-slate-950 after:border-transparent after:-rotate-90 p-1
+                                 after:left-[0.15em] after:-bottom-4
+                                 after:border-[10px] after:absolute text-[0px]" tabindex="0">{{ Lang.Name }}</div>
+                                 <p class="absolute underline text-blue-500 w-[4rem] -bottom-8 delay-500
+                                 group-hover:text-lg text-[0px] rounded-full group-hover:border-x-[4px]
+                                 border-dotted px-[7.5px] border-blue-500 truncate"
+                                 >{{ Lang.Cred|safe }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <p class="text-xs font-Comf mb-3">Click to view name</p>
+            {% elif El == "Projects" %}
+                <div class="flex flex-wrap gap-2 px-[1vw]">
+                    {% for Proj in Projs %}
+                        <div class="bg-teal-950 font-Comf p-1 min-w-[25vw] max-w-[22.5rem] min-h-[10vh] rounded-lg">
+                            <img class="rounded-lg h-[30vh]" src="{{ Proj.Cover.url }}" alt="{{ Proj.Title }}">
+                            <div class="grid grid-cols-6">
+                                <p class="text-2xl font-Oswd col-start-0 col-span-4">{{ Proj.Title }}</p>
+                                {% if Proj.Link != "None" %}
+                                    <a class="ml-[2.5ch] mt-2 col-start-6" href="{{ Proj.Link }}" target="_blank">
+                                        <img class="invert h-5 w-5" alt="Git Link"
+                                            src="https://res.cloudinary.com/meme-topia/image/upload/v1712639364/external-link_heab8t.png">
+                                    </a>
+                                {% endif %}
+                                <a class="mt-1 col-start-7" href="{{ Proj.Git }}" target="_blank">
+                                    <img class="h-6 w-6" alt="Web Link"
+                                        src="https://res.cloudinary.com/meme-topia/image/upload/v1712641277/github_syfgkq.png">
+                                </a>
+                            </div>
+                            <div class="flex my-1 gap-[0.25ch]">
+                                {% for Lang in Proj.Lang.all %}
+                                    <img class="h-6 w-6" alt="{{ Lang.Name }}" src="{{ Lang.Icon.url }}">
+                                {% endfor %}
+                            </div>
+                            <p class="text-xs">{{ Proj.Dscrp }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No Projects yet</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+    <div class="Badges" id="badges">
+        {% for Badge in Badges %}
+            {{ Badge|safe|slice:"4:-1" }}
+        {% endfor %}
+    </div>
+<footer>
+    {% for cred in Cred %}
+        <p>{{ cred.Text }}: {{ cred.Source }}</p>
+    {% endfor %}
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    function togFoc(id) {
+        let doc = $(`#Lang_${id}`)
+        console.log(doc.is(":focus"))
+        if(doc.is(":focus")) {
+            doc.blur()
+        } else {
+            doc.focus()
+        }
+    }
+    function Load() {
+        console.log("Starting...")
+        if (document.querySelectorAll("*")) {
+            document.querySelectorAll("#loadScr").visibility = "visible"
+
+        } else {
+            document.getElementById("loadScr").visibility = "hidden"
+        }
+    }
+    function DigBox(ID) {
+        alert(`Works ${ID}`)
+        let Dig = document.getElementById(`Info_${ID}`)
+        Dig.classList.add("Close")
+    }
+</script>
+</body>
+</html>
