@@ -1,4 +1,5 @@
 import requests
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from .models import Profile, Lang, Project, Edu, Work, Contact, Credit
 from bs4 import BeautifulSoup
@@ -17,11 +18,9 @@ def Scraper():
 
 # Create your views here.
 def home(request):
-    imgs = []
-
     prof = Profile.objects.get(Acct_id=1)
-    # edu = Edu.objects.filter(Acct_id=1)
-    # work = Work.objects.filter(Acct_id=1)
+    edu = Edu.objects.filter(Acct_id=1).order_by('-id')
+    work = Work.objects.filter(Acct_id=1).order_by('-id')
     lang = Lang.objects.filter(Acct_id=1)
     proj = Project.objects.filter(Acct_id=1)
 
@@ -34,11 +33,11 @@ def home(request):
     ctx = {
         # "Badges": list(enumerate(imgs))[::-1],
         "Prof": prof,
-        # "Edu": edu,
-        # "Work": work,
+        "Edu": edu,
+        "Work": work,
         "Langs": lang,
         "Projs": proj,
-        "Els": ["Skills", "Projects"],
+        "Els": ["About Me", "Work Experience", "Projects", "Education"],
     }
 
     return render(request, "Home.html", ctx)

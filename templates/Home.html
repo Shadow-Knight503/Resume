@@ -1,5 +1,6 @@
 {% load sass_tags %}
 {% load filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,9 @@
     {#    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">#}
     <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@200..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="{% sass_src 'Styles/Home.scss' %}" rel="stylesheet" type="text/css"/>
@@ -22,8 +26,8 @@
                         clifford: '#da373d',
                     },
                     fontFamily: {
-                        'Comf': ['Comfortaa', 'sans-serif'],
-                        'Oswd': ['Oswald', 'sans-serif'],
+                        'Comf': ['Raleway', 'Comfortaa', 'sans-serif'],
+                        'Oswd': ['Gemunu Libre', 'Oswald', 'sans-serif'],
                     },
                     keyframes: {
                         'wiggle': {
@@ -41,14 +45,19 @@
                         },
                         'tywrt': {
                             '0%': {opacity: 0},
-                            '100%': {opacity: 1},
+                            '100%': {opacity: 1, zIndex: 20},
+                        },
+                        'clrs': {
+                            "0%": {filter: 'brightness(0) invert(1)'},
+                            "100%": {filter: 'brightness(1) invert(0)'},
                         }
                     },
                     animation: {
                         'title': 'title 2s ease-out forwards',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
                         'opwd': 'wid_op 1s ease-in forwards',
-                        'typwrt': 'tywrt 1.5s ease-in forwards',
+                        'typwrt': 'tywrt 2.5s ease forwards',
+                        'clrd': 'clrs 1s ease forwards'
                     },
                     transitionProperty: {
                         ht: 'height 2s'
@@ -59,106 +68,239 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .hey {
-                display: inline-block;
-                position: relative;
-                color: #0087ca;
-            }
+            
         }
     </style>
     <title>Leroy's Resume</title>
 </head>
 <body class="relative bg-slate-900 grid" onload="Load();">
-{% include "Nav.html" %}
-<div class="fixed w-full h-full bg-slate-950 z-[69]" id="loadScr" hidden>Loading...</div>
-<div class="bg-gray-700 justify-self-end rounded-3xl fixed z-50 w-[5rem] mr-[1ch] mt-[10vh] rounded-t-full
-    rounded-b-full border-x-4 border-grey-500 transition-ht duration-200 ease-in-out h-min">
-    <img class="ease-in invert rounded-[50%]" alt="Links"
-         onclick="this.nextElementSibling.classList.toggle('h-[9rem]');this.classList.toggle('animate-opwd')"
-         src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-cartoon-link-icon-download-image_1196815.jpg">
-    <div class="items-center container justify-items-center grid h-0 transition-ht duration-200 overflow-hidden">
-        <div class="py-2 mb-3 transition-ht duration-200">
-            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle"
-                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"
-                 alt="POP">
-            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle border-1"
-                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"
-                 alt="POP">
+<script type="application/javascript">
+let nav, hgt, wH;
+    window.addEventListener("load", async (event) => {
+        nav = document.getElementById("nav")
+        hgt = []
+        {% for El in Els %}
+        	hgt.push(($('#{{ El|rem_spc }}').offset().top + $('#{{ El|rem_spc }}').outerHeight()))
+        {% endfor %}
+        wH = $(window).height();
+    })
+
+    function ComeHere(id) {
+        const cnt = document.getElementById(id.slice(0, -4))
+        console.log(id.substring(-5))
+        cnt.scrollIntoView({behavior: "smooth"})
+    }
+
+    window.addEventListener('scroll', function() {
+        let wS = window.scrollY
+        {#console.log(wH, wS)#}
+        if (wS > (hgt[3] - wH)){
+            nav.classList.remove(nav.className.split(" ").pop())
+            nav.classList.add("foh")
+        } else if (wS > (hgt[2] - wH)){
+            nav.classList.remove(nav.className.split(" ").pop())
+            nav.classList.add("thd")
+        } else if (wS > (hgt[1] - wH)){
+            nav.classList.remove(nav.className.split(" ").pop())
+            nav.classList.add("scd")
+        } else if(wS > (hgt[0] - wH)) {
+            nav.classList.remove(nav.className.split(" ").pop())
+            nav.classList.add("frt")
+        }
+    });
+</script>
+{#{% include "Nav.html" %}#}
+<div class="fixed w-full h-full bg-slate-950 z-[69]" id="loadScr" hidden="">Loading...</div>
+
+
+{# Link Holder... #}
+{#<div class="bg-gray-700 justify-self-end rounded-3xl fixed z-50 w-[5rem] mr-[1ch] mt-[10vh] rounded-t-full#}
+{#    rounded-b-full border-x-4 border-grey-500 transition-ht duration-200 ease-in-out h-min">#}
+{#    <img class="ease-in invert rounded-[50%]" alt="Links"#}
+{#         onclick="this.nextElementSibling.classList.toggle('h-[9rem]');this.classList.toggle('animate-opwd')"#}
+{#         src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-cartoon-link-icon-download-image_1196815.jpg">#}
+{#    <div class="items-center container justify-items-center grid h-0 transition-ht duration-200 overflow-hidden">#}
+{#        <div class="py-2 mb-3 transition-ht duration-200">#}
+{#            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle"#}
+{#                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"#}
+{#                 alt="POP">#}
+{#            <img class="mb-3 w-[3rem] h-[3rem] rounded animate-wiggle border-1"#}
+{#                 src="https://res.cloudinary.com/meme-topia/image/upload/v1681853407/zwnodnqd7uhnegeduzbo.png"#}
+{#                 alt="POP">#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+
+<div class="container relative justify-self-center md:my-[3rem]">
+    <div class="fixed p-4 max-w-max md:max-w-[31vw] -top-[1.75%] md:top-0 h-[90vh] z-[500]">
+        <div class="md:bg-transparent bg-slate-900 pt-4">
+            <h1 class="font-Oswd text-slate-200 text-5xl">Leroy Jeslyn</h1>
+            <p class="mt-4 font-comf text-blue-200">Full Stack Developer, AI/ML aficionado, Rookie Flutter dev</p>
+            <div class="flex relative group relative flex-wrap gap-2 py-[2vh] place-content-start">
+                {% for Lang in Langs %}
+                    <div class="relative group/lang hover:z-20 transition-all ease-out bg-[length:auto_80%] rounded-2xl
+                        bg-no-repeat bg-[0.25rem] min-w-[1.5rem] min-h-[1.5rem] brightness-[0] invert-[1] px-2 py-[0.2rem]
+                        group-hover:brightness-[1] group-hover:invert-[0] border-2 border-black
+    {#                    [border-image:linear-gradient(to_right,grey_25%,yellow_25%,yellow_50%,red_50%,red_75%,teal_75%)_1]#}
+                        transition-all ease-in-out duration-200"
+                         style="background-image: url('{{ Lang.Icon.url }}');transition-delay: {{ forloop.counter|mult:"200" }}ms"
+                         onclick='togFoc({{ Lang.id }})'>
+                         <p class="z-50 text-inherit font-Comf font-bold invert-[100%] ml-[1.75rem]">
+                                {{ Lang.Name }}</p>
+    {#                    <div id="Lang_{{ Lang.id }}" style="z-index: 50"#}
+    {#                         class="focus:w-auto focus:z-[30] w-fit focus:text-sm#}
+    {#                         focus:after:block focus:bg-slate-950 bg-transparent duration-200 ease-out#}
+    {#                         absolute left-[1em] focus:-top-9 -top-4 after:content-[' '] after:hidden transition-all#}
+    {#                         after:border-r-slate-950 after:border-transparent after:-rotate-90 p-1#}
+    {#                         after:left-[0.15em] after:-bottom-4#}
+    {#                         after:border-[10px] after:absolute text-[0px]" tabindex="0">{{ Lang.Name }}</div>#}
+    {#                    <p class="absolute underline text-blue-500 w-[5rem] delay-500 top-[110%]#}
+    {#                         group-hover:text-lg group-hover:bg-slate-900 text-[0px] rounded-full group-hover:border-x-[4px]#}
+    {#                         border-dotted px-[0.5rem] border-white truncate"#}
+    {#                         >{{ Lang.Cred|safe }}</p>#}
+                    </div>
+                {% endfor %}
+            </div>
+{#        <p class="basis-full text-white text-xs font-Comf mb-3"></p>#}
+        </div>
+        <div class="group text-slate-200 mt-8 list-none list-inside frt" id="nav">
+            {% for El in Els %}
+                <div class="inline w-10 h-[1px] bg-white"></div>
+                <p id="{{ El|rem_spc }}_nav" onclick="ComeHere(this.id)" class="cursor-default
+                    transition-all duration-200 ease-in-out rotate-y-90
+                    {% if El|rem_spc == "About_Me" %}md:group-[.frt]:text-2xl group-[.frt]:text-slate-400
+                    {% elif El|rem_spc == "Work_Experience" %}md:group-[.scd]:text-2xl group-[.scd]:text-slate-400
+                    {% elif El|rem_spc == "Projects" %}md:group-[.thd]:text-2xl group-[.thd]:text-slate-400
+                    {% elif El|rem_spc == "Education" %}md:group-[.foh]:text-2xl group-[.foh]:text-slate-400{% endif %}
+                ">{{ El }}</p>
+            {% endfor %}
+        </div>
+        <div class="absolute flex bottom-[-15%] z-[500] text-slate-200 w-[95.5%] md:bg-transparent bg-slate-900 pb-10">
+            <div>
+                <p>Contacts</p>
+                {% heroicon_outline "phone" class='inline mr-2' %}<span class="text-lg align-top">+91 9995967899</span><br>
+                {% heroicon_outline "inbox" class='inline mr-2' %}<span class="text-lg align-top">leroyjeslyn@gmail.com</span>
+            </div>
+            <a class="ml-auto" 
+                href="https://drive.google.com/file/d/1bClidSna1pFaR8LgCX1APvIW0aZlucRf/view?usp=drive_link" target="_blank">
+            <button class="block rounded-full px-2 py-1 my-4 bg-transparent text-white font-Oswd text-xl
+                bg-[linear-gradient(to_right,#172443_0%,#176083_51%,#172443_100%)] text-center transition-[0.5s]
+                bg-[200%_auto] text-[white] shadow-[0_0_20px_#26a0da] block m-2.5 px-[45px] py-[15px] rounded-[10px]
+                hover:bg-[right_center] hover:text-white hover:shadow-[0_0_20px_#314755]" type="button">
+                Get PDF Resume</button></a>
         </div>
     </div>
-</div>
-<div class="bg-gradient-to-r w-full h-[20vh] from-blue-950 from-25% via-blue-500 via-60% to-indigo-500 to-95%
-        flex justify-center items-center" onload="Load()">
-    <p class="text-3xl font-Oswd absolute break-words w-[20rem] text-[#243c5a] self-center text-center">Hello World</p>
-</div>
-<div class="container justify-self-center">
-    <div class="bg-gray-700 text-white font-Comf mt-4 p-[2ch] rounded grid">
-        {% for El in Els %}
-            <div class="w-fit">
-                <div class="font-Oswd text-3xl text-blue-200 justify-center place-self-center mb-2 overflow-hidden">
-                    <ul class="flex">
-                        {% for el in El %}
-                            <li class="animate-typwrt"
-                                style="animation-delay: {{ forloop.counter|mult:"100" }}ms"
-                            >{{ el }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% if El == "Skills" %}
-                <div class="flex flex-wrap gap-2 px-[2vw] py-[2vh] bg-gray-700 place-content-center">
-                    {% for Lang in Langs %}
-                        <div class="relative group hover:-translate-y-2 hover:z-20 transition-all ease-out bg-contain
-                            bg-no-repeat bg-center
-                            min-w-[4rem] min-h-[4rem]"
-                             style="background-image: url('{{ Lang.Icon.url }}');"
-                             onclick='togFoc({{ Lang.id }})'>
-                            <div id="Lang_{{ Lang.id }}" style="z-index: 50"
-                                 class="focus:w-auto focus:z-[30] w-fit focus:text-sm
-                                 focus:after:block focus:bg-slate-950 bg-transparent duration-200 ease-out
-                                 absolute left-[1em] focus:-top-9 -top-4 after:content-[' '] after:hidden transition-all
-                                 after:border-r-slate-950 after:border-transparent after:-rotate-90 p-1
-                                 after:left-[0.15em] after:-bottom-4
-                                 after:border-[10px] after:absolute text-[0px]" tabindex="0">{{ Lang.Name }}</div>
-                                 <p class="absolute underline text-blue-500 w-[4rem] -bottom-8 delay-500
-                                 group-hover:text-lg text-[0px] rounded-full group-hover:border-x-[4px]
-                                 border-dotted px-[7.5px] border-blue-500 truncate"
-                                 >{{ Lang.Cred|safe }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-                <p class="text-xs font-Comf mb-3">Click to view name</p>
-            {% elif El == "Projects" %}
-                <div class="flex flex-wrap gap-2 px-[1vw]">
-                    {% for Proj in Projs %}
-                        <div class="bg-teal-950 font-Comf p-1 min-w-[25vw] max-w-[22.5rem] min-h-[10vh] rounded-lg">
-                            <img class="rounded-lg h-[30vh]" src="{{ Proj.Cover.url }}" alt="{{ Proj.Title }}">
-                            <div class="grid grid-cols-6">
-                                <p class="text-2xl font-Oswd col-start-0 col-span-4">{{ Proj.Title }}</p>
-                                {% if Proj.Link != "None" %}
-                                    <a class="ml-[2.5ch] mt-2 col-start-6" href="{{ Proj.Link }}" target="_blank">
-                                        <img class="invert h-5 w-5" alt="Git Link"
-                                            src="https://res.cloudinary.com/meme-topia/image/upload/v1712639364/external-link_heab8t.png">
-                                    </a>
-                                {% endif %}
-                                <a class="mt-1 col-start-7" href="{{ Proj.Git }}" target="_blank">
-                                    <img class="h-6 w-6" alt="Web Link"
-                                        src="https://res.cloudinary.com/meme-topia/image/upload/v1712641277/github_syfgkq.png">
-                                </a>
-                            </div>
-                            <div class="flex my-1 gap-[0.25ch]">
-                                {% for Lang in Proj.Lang.all %}
-                                    <img class="h-6 w-6" alt="{{ Lang.Name }}" src="{{ Lang.Icon.url }}">
+{#    <div class="min-h-[15rem]"></div>#}
+    <div class="flex flex-row-reverse text-white font-Comf md:mt-4 pl-[2rem] rounded">
+        <div class="basis-2/3">
+            {% for El in Els %}
+                <div class="w-full z-[100] pt-[2rem] mt-5" id="{{ El|rem_spc }}">
+                    <div class="md:min-h-0 min-h-[15rem]"></div>
+                    <div class="w-fit">
+                        <div class="font-Oswd ml-8 text-3xl text-blue-200 justify-center place-self-center mb-2 overflow-hidden">
+                            <ul class="flex">
+                                {% for el in El %}
+                                    {% if el == " " %}
+                                        <li class="md:animate-typwrt text-slate-950">_</li>
+                                    {% else %}
+                                        <li class="md:animate-typwrt"
+                                            style="animation-delay: {{ forloop.counter|mult:"100" }}ms"
+                                        >{{ el }}</li>    	
+                                    {% endif %}
                                 {% endfor %}
-                            </div>
-                            <p class="text-xs">{{ Proj.Dscrp }}</p>
+                            </ul>
                         </div>
-                    {% empty %}
-                        <p>No Projects yet</p>
-                    {% endfor %}
+                    </div>
+                    {% if El == "Projects" %}
+                        <div class="grid grid-flow-row-dense grid-cols-1 gap-4 px-8 md:mb-[30vh]">
+                            {% for Proj in Projs %}
+                                <div class="flex relative font-Comf p-1 min-w-[2.5vw] h-fit rounded-lg bg-contain bg-no-repeat"
+                                    style="background-image: url('{{ Proj.Cover.url }}');">
+{#                                    <img class="rounded-lg h-full my-auto w-[10vw]" src="{{ Proj.Cover.url }}" alt="{{ Proj.Title }}">#}
+                                    <div class="flex gap-2 absolute right-2 z-50">
+                                        <a class="mt-1 col-span-1 col-start-8" href="{{ Proj.Git }}" target="_blank">
+                                            <img class="h-6 w-6" alt="Web Link"
+                                                src="https://res.cloudinary.com/meme-topia/image/upload/v1712641277/github_syfgkq.png">
+                                        </a>
+                                        {% if Proj.Link != "None" %}
+                                            <a class="mt-[0.35rem] col-span-1 col-start-7" href="{{ Proj.Link }}" target="_blank">
+                                                <img class="invert h-5 w-5" alt="Git Link"
+                                                    src="https://res.cloudinary.com/meme-topia/image/upload/v1712639364/external-link_heab8t.png">
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="ml-[20%] hover:ml-0 mb-[2.5%] p-4 w-auto rounded-lg border-[0.1px] hover:scale-100
+                                        bg-[#0000001a] backdrop-blur-[16px] transition-all ease">
+                                        <p class="text-2xl font-Oswd col-start-0 col-span-4">{{ Proj.Title }}</p>
+                                        <div class="flex my-1 gap-[0.25ch]">
+                                            {% for Lang in Proj.Lang.all %}
+                                                <img class="h-6 w-6" alt="{{ Lang.Name }}" src="{{ Lang.Icon.url }}">
+                                            {% endfor %}
+                                        </div>
+                                        <p class="text-sm">{{ Proj.Dscrp }}</p>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p>No Projects yet</p>
+                            {% endfor %}
+                        </div>
+                    {% elif El == "About Me" %}
+                        <div class="px-8 text-slate-400 min-h-[70vh]">
+                            <p>I'm a tech-savvy problem-solver with a knack for turning ideas into reality. 
+                                Whether it's building a web app, mastering a new language, or cracking a bad joke, 
+                                I'm always up for the challenge. I'm known for my unwavering commitment to my work. 
+                                Whether it's a tight deadline or a complex problem, I'm always ready to put in the 
+                                extra effort(hoot hoot) to achieve success.
+                                <br><br>    
+                                Currently interning at Aerodome Technologies, I'm diving headfirst into the world of 
+                                Blender and scripting. When I'm not automating tasks or optimizing code, 
+                                you can find me tinkering with projects like:
+                                <ul class="list-disc pl-4 px-4">
+                                    <li>Three JS based upgrade for this site,</li>
+                                    <li>Miscellaneous flutter apps to solve niche problems,</li>
+                                    <li>Google Chrome clone upgrade, similar to Arc.</li>
+                                </ul>
+                                <br>
+                                Beyond the code, I'm a problem-solving enthusiast, a football fanatic, 
+                                and a public speaking advocate (don't worry, I'll keep the jokes to a minimum).
+                                <br><br>
+                                Ready to collaborate? Let's build something awesome!
+                            </div>
+                    {% elif El == "Work Experience" %}
+                        <div class="px-8 text-md text-slate-400 md:min-h-[70vh]">
+                            {% for Wor in Work %}
+                                <div>
+                                    <p class="text-lg font-bold">{{ Wor.Comp }}</p>
+                                    <p class="text-md text-slate-300">{{ Wor.Durt }}</p>
+                                    <p>{{ Wor.Abut }}</p>
+                                </div>
+                            {% empty %}
+                            	<p>No Prior experience</p>
+                            {% endfor %}
+                        </div>
+                    {% elif El == "Education" %}
+                        <div class="px-8 text-slate-400 grid grid-col-1 gap-y-8 mb-[40vh]">
+                            {% for edu in Edu %}
+                            	<div class="text-md text-white">
+                                    <p class="font-bold text-slate-400">{{ edu.Inst }}</p>
+                                    <p class="inline">{{ edu.Degr }}</p> / <span class="inline">{{ edu.Durt }}</span>
+                                    <p class="text-slate-400">{{ edu.Abut }}</p>
+                                    <div class="flex gap-2 mt-2">
+                                        {% for Lang in edu.Skls.all %}
+                                            <div class="text-xs text-slate-400 p-1 rounded-lg border-x-2">
+                                                {{ Lang.Name }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% empty %}
+                            	<p>No prior education</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>
     <div class="Badges" id="badges">
