@@ -37,7 +37,10 @@ def home(request):
         "Work": work,
         "Langs": lang,
         "Projs": proj,
-        "Els": ["About Me", "Work Experience", "Projects", "Education"],
+        "Els": [
+            {"std": "About Me", "res": "Abt"}, {"std": "Work Experience", "res": "Work"},
+            {"std": "Projects", "res": "Proj"}, {"std": "Education", "res": "Edu"}],
+        # "Rel": ["Abt", "Work", "Proj", "Edu"]
     }
 
     return render(request, "Home.html", ctx)

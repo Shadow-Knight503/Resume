@@ -7,5 +7,9 @@ def mult(val, arg):
     return int(val) * int(arg)
 
 @register.filter
+def ind(val, arg):
+    return f"{val[int(arg)]}"
+
+@register.filter
 def rem_spc(val):
     return val.replace(' ', '_')
